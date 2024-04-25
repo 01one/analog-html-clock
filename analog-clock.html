@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analog Clock</title>
+  <style>
+    body {
+      background-color: rgb(139, 126, 126);
+    }
+    .clock-container {
+      color:#fffbe4;
+      background-color: rgb(105, 96, 96);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    #analog-clock {
+      border: 10px solid transparent;
+      border-image: linear-gradient(to right, #b59d72, #ffe79a) 1;
+      box-shadow: inset -1px 0px 12px 9px rgba(0, 0, 0, 0.5); 
+      width: 300px;
+      height: 300px;
+      position: relative;
+    }
+
+    .clock-hand {
+      box-shadow: 0 0 10px #00000080; 
+      position: absolute;
+      background:  linear-gradient(to right, #b59d72, #ffe79a);
+      transform-origin: 50% 100%;
+      width: 4px;
+      top: 50%;
+      left: 50%;
+    }
+
+    #hour-hand {
+      height: 50px;
+      margin-top: -50px;
+    }
+
+    #minute-hand {
+      height: 70px;
+      margin-top: -70px;
+    }
+
+    #second-hand {
+      height: 80px;
+      background:  linear-gradient(to right, #b59d72, #ffe79a);
+      margin-top: -80px;
+    }
+
+    .hour-number-left-right {
+      margin-top:-8px;
+      position: absolute;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .hour-number-top-bottom {
+      margin-left: -6px;
+      position: absolute;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+
+
+    .hour-number {
+      position: absolute;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .minute-dot {
+      position: absolute;
+      background-color: #333;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+    }
+
+    #digital-clock {
+      display: flex;
+      position:absolute;
+      margin-top:400px;
+      font-size: 48px;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock-container">
+    <div id="analog-clock">
+      <!-- Clock Hands -->
+      <div id="hour-hand" class="clock-hand"></div>
+      <div id="minute-hand" class="clock-hand"></div>
+      <div id="second-hand" class="clock-hand"></div>
+      
+      <!-- Hour Numbers -->
+      <div class="hour-number-top-bottom" style="top: 10px; left: 50%;">12</div>
+      <div class="hour-number-left-right" style="top: 50%; left: 95%;">3</div>
+      <div class="hour-number-top-bottom" style="bottom: 10px; left: 50%;">6</div>
+      <div class="hour-number-left-right" style="top: 50%; left: 5%;">9</div>
+
+      <!-- Minute Dots -->
+      <div class="minute-dot" style="top: 15%; left: 50%;"></div>
+      <div class="minute-dot" style="top: 50%; left: 85%;"></div>
+      <div class="minute-dot" style="bottom: 15%; left: 50%;"></div>
+      <div class="minute-dot" style="top: 50%; left: 15%;"></div>
+    </div>
+    <div id="digital-clock"></div>
+  </div>
+  <script>
+    function updateClock() {
+      const now = new Date();
+      
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+
+      // Analog clock
+      const hourHand = document.getElementById('hour-hand');
+      const minuteHand = document.getElementById('minute-hand');
+      const secondHand = document.getElementById('second-hand');
+
+      const hourDeg = (hours % 12) * 30 + minutes / 2;
+      const minuteDeg = minutes * 6;
+      const secondDeg = seconds * 6;
+
+      hourHand.style.transform = `rotate(${hourDeg}deg)`;
+      minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
+      secondHand.style.transform = `rotate(${secondDeg}deg)`;
+
+      // Digital clock
+      const digitalClock = document.getElementById('digital-clock');
+      digitalClock.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    setInterval(updateClock, 1000);
+
+    updateClock();
+  </script>
+</body>
+</html>
